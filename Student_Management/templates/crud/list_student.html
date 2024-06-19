@@ -1,0 +1,172 @@
+{% extends 'crud/base.html' %} {% block content %}
+<!-- {% for st in student %}
+{{st.id}}
+{{st.fname}}
+{{st.lname}}
+{{st.email}}
+{{st.phone}}
+{{st.branch}} <br>
+{% endfor %} -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email Id</th>
+      <th scope="col">Phone No</th>
+      <th scope="col">Branch</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for st in student %}
+    <tr>
+      <th>{{st.id}}</th>
+      <td>{{st.fname}}</td>
+      <td>{{st.lname}}</td>
+      <td>{{st.email}}</td>
+      <td>{{st.phone}}</td>
+      <td>{{st.brand}}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#viewModel{{st.id}}"
+        >
+          <i class="fa-solid fa-circle-info"></i>View
+        </button>
+        <!-- model student list -->
+
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="viewModel{{st.id}}"
+          tabindex="-1"
+          aria-labelledby="viewModelLabel{{st.id}}"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title fs-5" id="viewModel{{st.id}}">
+                  Student: {{st.fname}}{{st.lname}}
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <li>
+                    <strong>Student id: <strong>{{st.id}}</strong></strong>
+                  </li>
+                  <li>
+                    <strong
+                      >Student First Name: <strong>{{st.fname}}</strong></strong
+                    >
+                  </li>
+                  <li>
+                    <strong
+                      >Student Last Name: <strong>{{st.lname}}</strong></strong
+                    >
+                  </li>
+                  <li>
+                    <strong
+                      >Student Email: <strong>{{st.email}}</strong></strong
+                    >
+                  </li>
+                  <li>
+                    <strong
+                      >Student Phone No: <strong>{{st.phone}}</strong></strong
+                    >
+                  </li>
+                  <li>
+                    <strong
+                      >Student Branch: <strong>{{st.branch}}</strong></strong
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="{% url 'update' st.id %}" class="btn btn-warning btn-sm">
+          <i class="fa-solid fa-pen-to-square"></i>Update</a
+        >
+
+        <button
+          type="button"
+          class="btn btn-danger btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteModal{{st.id}}"
+        ><i class="fa-solid fa-trash"></i>
+          Delete
+        </button>
+        {% comment %} model for delete {% endcomment %}
+        <div
+          class="modal fade"
+          id="deleteModal{{st.id}}"
+          tabindex="-1" 
+          aria-labelledby="deleteModalLabel{{st.id}}"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel{{st.id}}">
+                  Confirmation for delete
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p>Are you Sure you want to delete this student</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  No
+                </button>
+                <form
+                  action="{% url 'delete' st.id %}"
+                  method="post"
+                  class="d-inline"
+                >
+                  {% csrf_token %}
+                  <input type="submit" value="Yes" class="btn btn-primary" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}
